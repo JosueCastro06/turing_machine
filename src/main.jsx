@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import TuringMachine from './App'
+import { AppQuantum } from './AppQuantum'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <TuringMachine />
+    <AppQuantum />
   </React.StrictMode>,
 )
