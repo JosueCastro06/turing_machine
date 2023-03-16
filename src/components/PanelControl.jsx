@@ -4,8 +4,7 @@ const PanelControl = () => {
   return (
     <>
       <div>PanelControl</div>
-
-      <button>Run</button>
+      {/* <button>Run</button> */}
       <button>Step</button>
       <button>Reset</button>
     
