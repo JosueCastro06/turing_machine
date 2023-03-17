@@ -1,10 +1,15 @@
 import React from 'react'
 
-const Tape = () => {
+const Tape = ({tape, head}) => {
   return (
     <>
-      <div>Tape</div>
-      <h2>Aca va la cinta</h2>
+      <h2>Tape</h2>
+
+      <div>
+        <div className="left_tape">{tape.left}</div>
+        <div className="HEAD">{head.char}</div>
+        <div className="rigth_tape">{tape.rigth}</div>
+      </div>
     </>
   )
 }

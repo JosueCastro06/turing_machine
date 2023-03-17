@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const PanelControl = () => {
+const PanelControl = ({handleClickReset, handleInputEntry }) => {
+
   return (
     <>
       <div>PanelControl</div>
       {/* <button>Run</button> */}
+      <input type="text" onChange={handleInputEntry}/>
       <button>Step</button>
-      <button>Reset</button>
+      <button onClick={handleClickReset}>Reset</button>
     
     </>
   )
