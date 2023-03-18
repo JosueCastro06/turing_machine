@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Tape, PanelControl, FormInputs } from "./components";
+import { overwriteTape } from "./helpers/methods";
 import { useGenerateFormatData } from "./hooks/useGenerateFormatData";
 import { useValidateInputs } from "./hooks/useValidateInputs";
 // import Tape from './components/Tape';
@@ -18,7 +20,10 @@ export const AppQuantum = () => {
     handleInputFinalStates,
     handleInputDictionary,
     handleClickReset,
-    handleInputEntry
+    handleInputEntry,
+    handleCurrentState_Step,
+    handleHead_Step,
+    handleTape_Step,
   } = useValidateInputs();
 
   const { transitionsData } = useGenerateFormatData({
@@ -26,10 +31,65 @@ export const AppQuantum = () => {
     handleInputDictionary,
   });
 
+  const [finalProcess, setfinalProcess] = useState(false);
+
+  const handleStepTape = (e) => {
+    if(transitions.size == 5){
+      if (
+        transitionsData[currentState] &&
+        transitionsData[currentState][head == " " ? "_" : head]
+      ) {
+        const { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
+          left: tape.left,
+          head:
+            transitionsData[currentState][head == " " ? "_" : head].write == "_"
+              ? " "
+              : transitionsData[currentState][head == " " ? "_" : head].write,
+          rigth: tape.rigth,
+          move: transitionsData[currentState][head == " " ? "_" : head].move,
+          currentState:
+            transitionsData[currentState][head == " " ? "_" : head].next,
+        });
+        handleCurrentState_Step(newCurrentState);
+        handleHead_Step(newHead);
+        handleTape_Step({ left: newLeft, rigth: newRigth });
+        // handleStepTape();
+      } else {
+        console.log("Finish");
+        setfinalProcess(true);
+      }
+    }else if(transitions.size == 3){
+      if (
+        transitionsData[currentState] &&
+        transitionsData[currentState][head == " " ? "_" : head]
+      ) {
+        const { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
+          left: tape.left,
+          head: head,
+          rigth: tape.rigth,
+          move: "R",
+          currentState: transitionsData[currentState][head == " " ? "_" : head].next,
+        });
+        handleCurrentState_Step(newCurrentState);
+        handleHead_Step(newHead);
+        handleTape_Step({ left: newLeft, rigth: newRigth });
+        // handleStepTape();
+      } else {
+        console.log("Finish");
+        if(finalStates.includes(currentState)){
+          console.log("Aprobado");
+        }else{
+          console.log("Rechazado");
+        }
+        setfinalProcess(true);
+      }
+    }
+  };
+
   return (
     <>
       <h1>APP Quantum</h1>
-      <Tape tape={tape} head={head}/>
+      <Tape tape={tape} head={head} />
       <FormInputs
         handleInputTransitions={handleInputTransitions}
         handleInputFinalStates={handleInputFinalStates}
@@ -37,7 +97,15 @@ export const AppQuantum = () => {
         transitions={transitions}
         messageTransitionsError={messageTransitionsError}
       />
-      {transitions && transitions.flag ? <PanelControl handleClickReset={handleClickReset} handleInputEntry={handleInputEntry} /> : ""}
+      {transitions && transitions.flag ? (
+        <PanelControl
+          handleClickReset={handleClickReset}
+          handleInputEntry={handleInputEntry}
+          handleStepTape={handleStepTape}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

@@ -35,7 +35,7 @@ const formatDataQuintuples = (quintuples, size) => {
 
 export const useGenerateFormatData = ({ transitions = {}, handleInputDictionary }) => {
 
-    const [transitionData, settransitionData] = useState({});
+    const [transitionsData, settransitionsData] = useState({});
 
     useEffect(() => {
         if (transitions && transitions.flag) {
@@ -44,11 +44,11 @@ export const useGenerateFormatData = ({ transitions = {}, handleInputDictionary 
             if(transitions.size == 3){
                 handleInputDictionary(dictionary);
             }
-            settransitionData(objData);
+            settransitionsData(objData);
         }
     }, [transitions])
 
     return {
-        transitionData,
+        transitionsData,
     }
 }

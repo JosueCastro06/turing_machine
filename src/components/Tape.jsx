@@ -7,7 +7,7 @@ const Tape = ({tape, head}) => {
 
       <div>
         <div className="left_tape">{tape.left}</div>
-        <div className="HEAD">{head.char}</div>
+        <div className="HEAD">*{head}</div>
         <div className="rigth_tape">{tape.rigth}</div>
       </div>
     </>

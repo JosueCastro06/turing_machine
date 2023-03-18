@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {returnInfoData, validatePositionToDataMachine, validateInputTransitions, validateInputEntry} from '../helpers/methods';
+import { returnInfoData, validatePositionToDataMachine, validateInputTransitions, validateInputEntry } from '../helpers/methods';
 
 export const useValidateInputs = () => {
     const [transitions, setTransitions] = useState({
@@ -9,15 +9,12 @@ export const useValidateInputs = () => {
     });
     const [tape, setTape] = useState({
         left: "",
-        rigth:""
+        rigth: ""
     });
     const [finalStates, setFinalStates] = useState([]);
     const [dictonary, setDictonary] = useState([]);
     const [currentState, setCurrentState] = useState('0');
-    const [head, setHead] = useState({
-        position:0,
-        char:""
-    });
+    const [head, setHead] = useState("");
 
     const [inputEntry, setInputEntry] = useState("");
 
@@ -58,8 +55,9 @@ export const useValidateInputs = () => {
     }
 
     const handleClickReset = (e) => {
-        const {flagValidateInputEntry, tape, head} =  validateInputEntry(inputEntry, dictonary, transitions.size);
-        if(flagValidateInputEntry){
+        const { flagValidateInputEntry, tape, head } = validateInputEntry(inputEntry, dictonary, transitions.size);
+        if (flagValidateInputEntry) {
+            setCurrentState('0');
             setTape(tape);
             setHead(head);
         }
@@ -67,6 +65,23 @@ export const useValidateInputs = () => {
 
     const handleInputEntry = (e) => setInputEntry(e.target.value);
 
+    const handleCurrentState_Step = (data) => {
+        if(currentState){
+            setCurrentState(data);
+        }
+    }
+
+    const handleHead_Step = (data) => {
+        if(head){
+            setHead(data);
+        }
+    }
+
+    const handleTape_Step = (data) => {
+        if(tape){
+            setTape(data);
+        }
+    }
 
     return {
         transitions,
@@ -80,6 +95,9 @@ export const useValidateInputs = () => {
         handleInputFinalStates,
         handleInputDictionary,
         handleClickReset,
-        handleInputEntry
+        handleInputEntry,
+        handleCurrentState_Step,
+        handleHead_Step,
+        handleTape_Step
     }
 }

@@ -52,10 +52,7 @@ const validateInputTransitions = (input) => {
 }
 
 const validateInputEntry = (input, dictonary, size) => {
-    let head = {
-        position:0,
-        char: input[0] || "_"
-    };
+    let head = input[0] || " ";
     let tape = {
         rigth: input.slice(1),
         left: ""
@@ -64,10 +61,7 @@ const validateInputEntry = (input, dictonary, size) => {
     const character = input.split('');
 
     if(input.includes('*') && size == 5){
-        head = {
-            position: input.indexOf('*')+1,
-            char:input[input.indexOf('*')+1]
-        }
+        head = input[input.indexOf('*')+1] || " ";
         tape["rigth"] = input.split('*')[1].slice(1);
         tape["left"] = input.split('*')[0];
         input = input.replace('*', '');
@@ -86,10 +80,39 @@ const validateInputEntry = (input, dictonary, size) => {
     };
 }
 
+const overwriteTape = ({left, head, rigth, move, currentState}) =>{
+    console.log((rigth[0] && rigth[0] != '') ? rigth[0] : " ");
+    let newLeft = "", newHead = "", newRigth = "";
+    if(move == "r" || move == "R"){
+        newLeft = left.concat(head);
+        newHead = (rigth[0] && rigth[0] != '') ? rigth[0] : " ";
+        newRigth = rigth.slice(1);
+    }else if(move == "l" || move == "L"){
+        newLeft = left.slice(0, -1);
+        newHead = left[left.length - 1] || " ";
+        newRigth = head.concat(rigth);
+    }
+
+    console.log({
+        newLeft,
+        newHead,
+        newRigth,
+        currentState
+    });
+
+    return {
+        newLeft,
+        newHead,
+        newRigth,
+        newCurrentState: currentState
+    }
+}
+
 
 export {
     returnInfoData,
     validatePositionToDataMachine,
     validateInputTransitions,
     validateInputEntry,
+    overwriteTape
 }
