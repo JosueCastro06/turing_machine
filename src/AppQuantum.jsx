@@ -55,7 +55,6 @@ export const AppQuantum = () => {
         handleTape_Step({ left: newLeft, rigth: newRigth });
         // handleStepTape();
       } else {
-        console.log("Finish");
         setfinalProcess(true);
       }
     }else if(transitions.size == 3){
