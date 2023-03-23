@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Tape, PanelControl, FormInputs } from "./components";
-import { overwriteTape } from "./helpers/methods";
+import { Tape, PanelControl, FormInputs, BarControl } from "./components";
+import { processStepTape } from "./helpers/methods";
 import { useGenerateFormatData } from "./hooks/useGenerateFormatData";
 import { useValidateInputs } from "./hooks/useValidateInputs";
 // import Tape from './components/Tape';
@@ -12,10 +12,12 @@ export const AppQuantum = () => {
     transitions,
     tape,
     finalStates,
-    dictonary,
     currentState,
     head,
     messageTransitionsError,
+    isRunning,
+    counter,
+    generalMessage,
     handleInputTransitions,
     handleInputFinalStates,
     handleInputDictionary,
@@ -24,6 +26,10 @@ export const AppQuantum = () => {
     handleCurrentState_Step,
     handleHead_Step,
     handleTape_Step,
+    handleRunTape,
+    handleStop,
+    handleCounter,
+    handleGeneralMessage
   } = useValidateInputs();
 
   const { transitionsData } = useGenerateFormatData({
@@ -31,68 +37,56 @@ export const AppQuantum = () => {
     handleInputDictionary,
   });
 
-  const [finalProcess, setfinalProcess] = useState(false);
+  const handleStepTape = async (e) => {
+    const {
+      newCurrentStateReturn,
+      newHeadReturn,
+      newLeftReturn,
+      newRigthReturn,
+      flagFinalProcessReturn = false,
+    } = processStepTape({
+      transitions,
+      transitionsData,
+      tape,
+      head,
+      currentState,
+    });
 
-  const handleStepTape = (e) => {
-    if(transitions.size == 5){
-      if (
-        transitionsData[currentState] &&
-        transitionsData[currentState][head == " " ? "_" : head]
-      ) {
-        const { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
-          left: tape.left,
-          head:
-            transitionsData[currentState][head == " " ? "_" : head].write == "_"
-              ? " "
-              : transitionsData[currentState][head == " " ? "_" : head].write,
-          rigth: tape.rigth,
-          move: transitionsData[currentState][head == " " ? "_" : head].move,
-          currentState:
-            transitionsData[currentState][head == " " ? "_" : head].next,
-        });
-        handleCurrentState_Step(newCurrentState);
-        handleHead_Step(newHead);
-        handleTape_Step({ left: newLeft, rigth: newRigth });
-        // handleStepTape();
-      } else {
-        setfinalProcess(true);
-      }
-    }else if(transitions.size == 3){
-      if (
-        transitionsData[currentState] &&
-        transitionsData[currentState][head == " " ? "_" : head]
-      ) {
-        const { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
-          left: tape.left,
-          head: head,
-          rigth: tape.rigth,
-          move: "R",
-          currentState: transitionsData[currentState][head == " " ? "_" : head].next,
-        });
-        handleCurrentState_Step(newCurrentState);
-        handleHead_Step(newHead);
-        handleTape_Step({ left: newLeft, rigth: newRigth });
-        // handleStepTape();
-      } else {
-        console.log("Finish");
-        if(finalStates.includes(currentState)){
-          console.log("Aprobado");
-        }else{
-          console.log("Rechazado");
-        }
-        setfinalProcess(true);
-      }
+    if (flagFinalProcessReturn) {
+      handleGeneralMessage(`Finish${(transitions.size == 3) ? (finalStates.includes(currentState)) ? ", Approved" : ", Rejected" : ""} !!`);
+      handleStop();
+    } else {
+      handleCurrentState_Step(newCurrentStateReturn);
+      handleHead_Step(newHeadReturn);
+      handleTape_Step({ left: newLeftReturn, rigth: newRigthReturn });
     }
+
+    // console.log({
+    //   head,
+    //   tape,
+    //   currentState,
+    // });
   };
+
+  useEffect(() => {
+    let timeout;
+    if (isRunning) {
+      timeout = setTimeout(() => {
+        handleStepTape();
+        handleCounter();
+      }, 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [isRunning, counter]);
 
   return (
     <>
       <h1>APP Quantum</h1>
       <Tape tape={tape} head={head} />
+      <BarControl currentState={currentState} generalMessage={generalMessage} counter={counter}/>
       <FormInputs
         handleInputTransitions={handleInputTransitions}
         handleInputFinalStates={handleInputFinalStates}
-        handleInputDictionary={handleInputDictionary}
         transitions={transitions}
         messageTransitionsError={messageTransitionsError}
       />
@@ -101,6 +95,9 @@ export const AppQuantum = () => {
           handleClickReset={handleClickReset}
           handleInputEntry={handleInputEntry}
           handleStepTape={handleStepTape}
+          handleRunTape={handleRunTape}
+          isRunning={isRunning}
+          handleStop={handleStop}
         />
       ) : (
         ""

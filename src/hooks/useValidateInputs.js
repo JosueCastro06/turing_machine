@@ -20,6 +20,12 @@ export const useValidateInputs = () => {
 
     const [messageTransitionsError, setMessageTransitionsError] = useState("");
 
+    const [isRunning, setIsRunning] = useState(false);
+
+    const [counter, setCounter] = useState(0);
+
+    const [generalMessage, setGeneralMessage] = useState("");
+
 
     const handleInputTransitions = (e) => {
         if (e.target.value != '') {
@@ -57,31 +63,33 @@ export const useValidateInputs = () => {
     const handleClickReset = (e) => {
         const { flagValidateInputEntry, tape, head } = validateInputEntry(inputEntry, dictonary, transitions.size);
         if (flagValidateInputEntry) {
-            setCurrentState('0');
-            setTape(tape);
-            setHead(head);
+            handleCurrentState_Step('0');
+            handleHead_Step(head);
+            handleTape_Step(tape);
+            handleGeneralMessage("");
+        }else{
+            handleGeneralMessage("Error, Input does not valid in the dictionary !!");
         }
+
+        setCounter(0);
     }
 
     const handleInputEntry = (e) => setInputEntry(e.target.value);
 
-    const handleCurrentState_Step = (data) => {
-        if(currentState){
-            setCurrentState(data);
-        }
-    }
+    const handleCurrentState_Step = (data) => setCurrentState(data);
 
-    const handleHead_Step = (data) => {
-        if(head){
-            setHead(data);
-        }
-    }
+    const handleHead_Step = (data) => setHead(data);
 
-    const handleTape_Step = (data) => {
-        if(tape){
-            setTape(data);
-        }
-    }
+    const handleTape_Step = (data) => setTape(data);
+
+    
+    const handleRunTape = () => setIsRunning(true);
+    
+    const handleStop = () => setIsRunning(false);
+
+    const handleCounter = () => setCounter(counter+1);
+
+    const handleGeneralMessage = (msg) => setGeneralMessage(msg);
 
     return {
         transitions,
@@ -91,6 +99,9 @@ export const useValidateInputs = () => {
         currentState,
         head,
         messageTransitionsError,
+        isRunning,
+        counter,
+        generalMessage,
         handleInputTransitions,
         handleInputFinalStates,
         handleInputDictionary,
@@ -98,6 +109,10 @@ export const useValidateInputs = () => {
         handleInputEntry,
         handleCurrentState_Step,
         handleHead_Step,
-        handleTape_Step
+        handleTape_Step,
+        handleRunTape,
+        handleStop,
+        handleCounter,
+        handleGeneralMessage
     }
 }

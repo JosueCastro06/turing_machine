@@ -81,7 +81,6 @@ const validateInputEntry = (input, dictonary, size) => {
 }
 
 const overwriteTape = ({left, head, rigth, move, currentState}) =>{
-    console.log((rigth[0] && rigth[0] != '') ? rigth[0] : " ");
     let newLeft = "", newHead = "", newRigth = "";
     if(move == "r" || move == "R"){
         newLeft = left.concat(head);
@@ -92,14 +91,6 @@ const overwriteTape = ({left, head, rigth, move, currentState}) =>{
         newHead = left[left.length - 1] || " ";
         newRigth = head.concat(rigth);
     }
-
-    console.log({
-        newLeft,
-        newHead,
-        newRigth,
-        currentState
-    });
-
     return {
         newLeft,
         newHead,
@@ -108,11 +99,74 @@ const overwriteTape = ({left, head, rigth, move, currentState}) =>{
     }
 }
 
+const processStepTape = ({transitions, transitionsData, tape, head, currentState}) => {
+    let newCurrentStateReturn,
+      newHeadReturn,
+      newLeftReturn,
+      newRigthReturn,
+      flagFinalProcessReturn = true;
+
+
+    if (transitions.size == 5) {
+      if (
+        transitionsData[currentState] &&
+        transitionsData[currentState][head == " " ? "_" : head]
+      ) {
+        const { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
+          left: tape.left,
+          head:
+            transitionsData[currentState][head == " " ? "_" : head].write == "_"
+              ? " "
+              : transitionsData[currentState][head == " " ? "_" : head].write,
+          rigth: tape.rigth,
+          move: transitionsData[currentState][head == " " ? "_" : head].move,
+          currentState:
+            transitionsData[currentState][head == " " ? "_" : head].next,
+        });
+
+        newCurrentStateReturn = newCurrentState;
+        newHeadReturn = newHead;
+        newLeftReturn = newLeft;
+        newRigthReturn = newRigth;
+        flagFinalProcessReturn = false;
+      }
+    } else if (transitions.size == 3) {
+      if (
+        transitionsData[currentState] &&
+        transitionsData[currentState][head == " " ? "_" : head]
+      ) {
+        let { newLeft, newHead, newRigth, newCurrentState } = overwriteTape({
+          left: tape.left,
+          head: head,
+          rigth: tape.rigth,
+          move: "R",
+          currentState:
+            transitionsData[currentState][head == " " ? "_" : head].next,
+        });
+
+        newCurrentStateReturn = newCurrentState;
+        newHeadReturn = newHead;
+        newLeftReturn = newLeft;
+        newRigthReturn = newRigth;
+        flagFinalProcessReturn = false;
+      }
+    }
+
+    return {
+      newCurrentStateReturn,
+      newHeadReturn,
+      newLeftReturn,
+      newRigthReturn,
+      flagFinalProcessReturn
+    };
+  };
+
 
 export {
     returnInfoData,
     validatePositionToDataMachine,
     validateInputTransitions,
     validateInputEntry,
-    overwriteTape
+    overwriteTape,
+    processStepTape
 }
