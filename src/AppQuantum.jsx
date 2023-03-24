@@ -94,35 +94,17 @@ export const AppQuantum = () => {
         transitions={transitions}
         messageTransitionsError={messageTransitionsError}
       />
-      {/* {transitions && transitions.flag ? (
-        <PanelControl
-          handleClickReset={handleClickReset}
-          handleInputEntry={handleInputEntry}
-          handleStepTape={handleStepTape}
-          handleRunTape={handleRunTape}
-          isRunning={isRunning}
-          handleStop={handleStop}
-      <div className="flex justify-around">
-        <FormInputs
-          handleInputTransitions={handleInputTransitions}
-          handleInputFinalStates={handleInputFinalStates}
-          handleInputDictionary={handleInputDictionary}
-          transitions={transitions}
-          messageTransitionsError={messageTransitionsError}
-        />
-
-        {transitions && transitions.flag ? (
-          <PanelControl
+      {transitions && transitions.flag 
+        ? (<PanelControl
             handleClickReset={handleClickReset}
             handleInputEntry={handleInputEntry}
             handleStepTape={handleStepTape}
-          />
-        ) : (
-          ""
-        )}
-
-      </div>
-      */}
+            handleRunTape={handleRunTape}
+            isRunning={isRunning}
+            handleStop={handleStop}
+            />)
+        : ("")
+      }
     </div> 
   );
 };
