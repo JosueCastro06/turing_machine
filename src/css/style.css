@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.text-30px{
+    font-size: 30px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }

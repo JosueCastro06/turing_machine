@@ -8,7 +8,12 @@ module.exports = {
     fontFamily: {
       'sans': ['Helvetica', 'Arial', 'sans-serif'],
     },
-    extend: {},
+    extend: {colors:{
+      custom:{
+        "input":"#292929",
+        "font":"#151E21"
+      }
+    }},
   },
   plugins: [],
 }

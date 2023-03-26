@@ -60,12 +60,6 @@ export const AppQuantum = () => {
       handleHead_Step(newHeadReturn);
       handleTape_Step({ left: newLeftReturn, rigth: newRigthReturn });
     }
-
-    // console.log({
-    //   head,
-    //   tape,
-    //   currentState,
-    // });
   };
 
   useEffect(() => {
@@ -80,7 +74,7 @@ export const AppQuantum = () => {
   }, [isRunning, counter]);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 py-8">
       <div className="flex justify-center items-center mb-10">
         <div className="text-center pt-16">
           <h1 className="text-4xl font-bold">APP Quantum</h1>
@@ -88,23 +82,25 @@ export const AppQuantum = () => {
       </div>
       <Tape tape={tape} head={head} />
       <BarControl currentState={currentState} generalMessage={generalMessage} counter={counter}/>
-      <FormInputs
-        handleInputTransitions={handleInputTransitions}
-        handleInputFinalStates={handleInputFinalStates}
-        transitions={transitions}
-        messageTransitionsError={messageTransitionsError}
-      />
-      {transitions && transitions.flag 
-        ? (<PanelControl
-            handleClickReset={handleClickReset}
-            handleInputEntry={handleInputEntry}
-            handleStepTape={handleStepTape}
-            handleRunTape={handleRunTape}
-            isRunning={isRunning}
-            handleStop={handleStop}
-            />)
-        : ("")
-      }
+      <div className="grid grid-cols-2 gap-4 h-auto">
+        <FormInputs
+          handleInputTransitions={handleInputTransitions}
+          handleInputFinalStates={handleInputFinalStates}
+          transitions={transitions}
+          messageTransitionsError={messageTransitionsError}
+        />
+        {transitions && transitions.flag 
+          ? (<PanelControl
+              handleClickReset={handleClickReset}
+              handleInputEntry={handleInputEntry}
+              handleStepTape={handleStepTape}
+              handleRunTape={handleRunTape}
+              isRunning={isRunning}
+              handleStop={handleStop}
+              />)
+          : ("")
+        }
+      </div>
     </div> 
   );
 };
