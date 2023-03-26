@@ -8,12 +8,12 @@ const PanelControl = ({
 }) => {
   return (
     <div className="">
-      <div class="flex flex-col">
-        <label class="mb-2 font-bold" for="inputEntry">
+      <div className="flex flex-col">
+        <label className="mb-2 font-bold" htmlFor="inputEntry">
           Input Tape
         </label>
         <input
-          class="bg-custom-input border-none px-3 py-2 placeholder-gray-400 border rounded-md 
+          className="bg-custom-input border-none px-3 py-2 placeholder-gray-400 border rounded-md 
                 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent rounded-2xl p-2"
           type="text"
           name="inputEntry"

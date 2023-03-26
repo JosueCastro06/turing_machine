@@ -7,7 +7,7 @@ const FormInputs = ({
   return (
     <form>
       <div
-        className={`h-auto mt-4 grid ${
+        className={`grid ${
           transitions && transitions.size == 3
             ? "grid-cols-2 gap-4"
             : "grid-cols-1"

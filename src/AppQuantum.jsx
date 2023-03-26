@@ -29,7 +29,7 @@ export const AppQuantum = () => {
     handleRunTape,
     handleStop,
     handleCounter,
-    handleGeneralMessage
+    handleGeneralMessage,
   } = useValidateInputs();
 
   const { transitionsData } = useGenerateFormatData({
@@ -53,7 +53,15 @@ export const AppQuantum = () => {
     });
 
     if (flagFinalProcessReturn) {
-      handleGeneralMessage(`Finish${(transitions.size == 3) ? (finalStates.includes(currentState)) ? ", Approved" : ", Rejected" : ""} !!`);
+      handleGeneralMessage(
+        `Finish${
+          transitions.size == 3
+            ? finalStates.includes(currentState)
+              ? ", Approved"
+              : ", Rejected"
+            : ""
+        } !`
+      );
       handleStop();
     } else {
       handleCurrentState_Step(newCurrentStateReturn);
@@ -77,30 +85,51 @@ export const AppQuantum = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-center items-center mb-10">
         <div className="text-center pt-16">
-          <h1 className="text-4xl font-bold">APP Quantum</h1>
+          <h1 className="text-4xl font-bold border-b-4 border-blue-500 pb-4">
+            APP Quantum
+          </h1>
         </div>
       </div>
       <Tape tape={tape} head={head} />
-      <BarControl currentState={currentState} generalMessage={generalMessage} counter={counter}/>
-      <div className="grid grid-cols-2 gap-4 h-auto">
+      <BarControl
+        currentState={currentState}
+        generalMessage={generalMessage}
+        counter={counter}
+      />
+      <div className="grid grid-cols-2 gap-4 mt-4">
         <FormInputs
           handleInputTransitions={handleInputTransitions}
           handleInputFinalStates={handleInputFinalStates}
           transitions={transitions}
           messageTransitionsError={messageTransitionsError}
         />
-        {transitions && transitions.flag 
-          ? (<PanelControl
-              handleClickReset={handleClickReset}
-              handleInputEntry={handleInputEntry}
-              handleStepTape={handleStepTape}
-              handleRunTape={handleRunTape}
-              isRunning={isRunning}
-              handleStop={handleStop}
-              />)
-          : ("")
-        }
+        {transitions && transitions.flag ? (
+          <PanelControl
+            handleClickReset={handleClickReset}
+            handleInputEntry={handleInputEntry}
+            handleStepTape={handleStepTape}
+            handleRunTape={handleRunTape}
+            isRunning={isRunning}
+            handleStop={handleStop}
+          />
+        ) : (
+          ""
+        )}
       </div>
-    </div> 
+      <footer className="mt-4 text-center">
+        <div>Parcial - Computación Cuántica</div>
+        <div className="mt-5">
+          <h3>Integrantes</h3>
+          <ul className="mt-2">
+            <li className="mb-1">
+              Josue Joel Castro Paternina - 20221678027
+            </li>
+            <li className="mb-4">
+              Pablo Alejandro Guacaneme Lara - 20221678008
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
   );
 };
