@@ -5,11 +5,11 @@ const FormInputs = ({
   messageTransitionsError,
 }) => {
   return (
-    <form>
+    <form className="row-start-2 mt-6 lg:row-start-1 lg:mt-0">
       <div
         className={`grid ${
           transitions && transitions.size == 3
-            ? "grid-cols-2 gap-4"
+            ? "sm:grid-cols-2 gap-4"
             : "grid-cols-1"
         }`}
       >

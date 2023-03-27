@@ -61,17 +61,26 @@ export const useValidateInputs = () => {
     }
 
     const handleClickReset = (e) => {
+        setCounter(0);
+        handleCurrentState_Step('0');
+        handleGeneralMessage("");
+
+        if(inputEntry == ""){
+            handleHead_Step(" ");
+            handleTape_Step({
+                left: "",
+                rigth: ""
+            });
+            return; 
+        }
+
         const { flagValidateInputEntry, tape, head } = validateInputEntry(inputEntry, dictonary, transitions.size);
         if (flagValidateInputEntry) {
-            handleCurrentState_Step('0');
             handleHead_Step(head);
             handleTape_Step(tape);
-            handleGeneralMessage("");
         }else{
             handleGeneralMessage("Error, Input does not valid in the dictionary !!");
         }
-
-        setCounter(0);
     }
 
     const handleInputEntry = (e) => setInputEntry(e.target.value);

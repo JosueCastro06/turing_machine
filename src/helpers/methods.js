@@ -24,7 +24,6 @@ const validateInputTransitions = (input) => {
     let initialLength;
     let flagSizeQuintuple = true;
     let quintuples = input.split('\n').filter(quintuple => quintuple != '').map(quintuple => quintuple.trim());
-
     initialLength = (quintuples[0].trim().split(' ').length == 5 || quintuples[0].trim().split(' ').length == 3) && quintuples[0].trim().split(' ').length;
     if (initialLength) {
         quintuples.forEach(quintuple => {

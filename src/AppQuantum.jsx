@@ -56,26 +56,28 @@ export const AppQuantum = () => {
       handleGeneralMessage(
         `Finish${
           transitions.size == 3
-            ? finalStates.includes(currentState)
-              ? ", Approved"
-              : ", Rejected"
-            : ""
+          ? finalStates.includes(currentState)
+          ? ", Approved"
+          : ", Rejected"
+          : ""
         } !`
-      );
-      handleStop();
-    } else {
-      handleCurrentState_Step(newCurrentStateReturn);
+        );
+        handleStop();
+        return;
+      } else {
+        handleCurrentState_Step(newCurrentStateReturn);
       handleHead_Step(newHeadReturn);
       handleTape_Step({ left: newLeftReturn, rigth: newRigthReturn });
     }
-  };
 
+    handleCounter();
+  };
+  
   useEffect(() => {
     let timeout;
     if (isRunning) {
       timeout = setTimeout(() => {
         handleStepTape();
-        handleCounter();
       }, 50);
       return () => clearTimeout(timeout);
     }
@@ -96,7 +98,7 @@ export const AppQuantum = () => {
         generalMessage={generalMessage}
         counter={counter}
       />
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid lg:grid-cols-2 lg:gap-4 mt-4">
         <FormInputs
           handleInputTransitions={handleInputTransitions}
           handleInputFinalStates={handleInputFinalStates}

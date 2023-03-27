@@ -23,29 +23,29 @@ const PanelControl = ({
         />
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 ul-buttons flex justify-around">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
+          className={`bg-blue-500 text-white font-bold py-2 px-4 mr-2 rounded btn-action ${(isRunning)?"bg-gray-500 cursor-not-allowed":"hover:bg-blue-700 li-buttons"}`}
           onClick={handleRunTape}
           disabled={isRunning}
         >
           Run
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded li-buttons btn-action"
           onClick={handleStop}
         >
           Stop
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
+          className={`bg-blue-500 text-white font-bold py-2 px-4 mr-2 rounded btn-action ${(isRunning)?"bg-gray-500 cursor-not-allowed":"hover:bg-blue-700 li-buttons"}`}
           onClick={handleStepTape}
           disabled={isRunning}
         >
           Step
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={`bg-blue-500 text-white font-bold py-2 px-4 mr-2 rounded btn-action ${(isRunning)?"bg-gray-500 cursor-not-allowed":"hover:bg-blue-700 li-buttons"}`}
           onClick={handleClickReset}
           disabled={isRunning}
         >
