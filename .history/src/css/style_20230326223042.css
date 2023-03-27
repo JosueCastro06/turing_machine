@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.text-30px{
+    font-size: 30px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+
+
+.ul-buttons {
+    padding: 0;
+    list-style-type: none;
+}
+
+.li-buttons {
+    font-size: 15px;
+    width: 8em;
+    height: 3em;
+    text-align: center;
+    line-height: 2em;
+    text-transform: capitalize;
+    position: relative;
+    transition: 0.5s;
+    margin: 0.8em;
+}
+
+.li-buttons::before,
+.li-buttons::after {
+    content: '';
+    position: absolute;
+    width: 0.6em;
+    height: 0.6em;
+    background-color: gainsboro;
+    border-radius: 50%;
+    transition: 0.1s cubic-bezier(0.5, -0.5, 0.25, 1.5);
+    top: calc(50% - 0.6em / 2);
+}
+
+.li-buttons::before {left: 0; z-index: -1;}
+.li-buttons::after {right: 0; z-index: -2;}
+
+.li-buttons:hover {
+    color: white;
+}
+
+.li-buttons:hover::before,
+.li-buttons:hover::after {
+    width: 95%;
+    height: 95%;
+    border-radius: 0;
+    background-color: dodgerblue;
+}
+
+.li-buttons:hover::before {
+    top: 0;
+}
+
+.li-buttons:hover::after {
+    right: -0.4em;
+    filter: brightness(0.8);
+}
